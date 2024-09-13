@@ -1,0 +1,92 @@
+[
+    {
+        "id": "set-01",
+        "titulo": "Set Matteoli",
+        "imagen": "./img/set/01.jpg",
+        "categoria": {
+            "nombre": "Set",
+            "id": "set"
+        },
+        "precio": 10000
+    },
+    {
+        "id": "mates-01",
+        "titulo": "Imperial 925 Cream",
+        "imagen": "./img/mates/01.jpg",
+        "categoria": {
+            "nombre": "Mates",
+            "id": "mates"
+        },
+        "precio": 2850
+    },
+    {
+        "id": "mates-02",
+        "titulo": "Imperial 925 Blanco",
+        "imagen": "./img/mates/02.jpg",
+        "categoria": {
+            "nombre": "Mates",
+            "id": "mates"
+        },
+        "precio": 2600
+    },
+    {
+        "id": "mates-03",
+        "titulo": "Imperial Rosalia",
+        "imagen": "./img/mates/03.jpg",
+        "categoria": {
+            "nombre": "Mates",
+            "id": "mates"
+        },
+        "precio": 2500
+    },
+    {
+        "id": "mates-04",
+        "titulo": "Torpedo Natural",
+        "imagen": "./img/mates/04.jpg",
+        "categoria": {
+            "nombre": "Mates",
+            "id": "mates"
+        },
+        "precio": 2200
+    },
+    {
+        "id": "mates-5",
+        "titulo": "Imperial Blanco",
+        "imagen": "./img/mates/05.jpg",
+        "categoria": {
+            "nombre": "Camisetas",
+            "id": "camisetas"
+        },
+        "precio": 2500
+    },
+    {
+        "id": "mates-6",
+        "titulo": "Camionero Beige",
+        "imagen": "./img/mates/06.jpg",
+        "categoria": {
+            "nombre": "Mates",
+            "id": "mates"
+        },
+        "precio": 2500
+    },
+    {
+        "id": "bombilla-01",
+        "titulo": "Bombilla Alpaca",
+        "imagen": "./img/bombilla/01.jpg",
+        "categoria": {
+            "nombre": "Bombilla",
+            "id": "bombilla"
+        },
+        "precio": 2300
+    },
+    {
+        "id": "bombilla-02",
+        "titulo": "Bombilla Acero",
+        "imagen": "./img/bombilla/02.jpg",
+        "categoria": {
+            "nombre": "Bombilla",
+            "id": "bombilla"
+        },
+        "precio": 1600
+    }
+]
