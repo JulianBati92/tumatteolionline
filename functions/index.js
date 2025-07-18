@@ -21,8 +21,8 @@ exports.createCheckoutSession = functions.https.onCall(async (data, context) => 
     payment_method_types: ['card'],
     line_items: lineItems,
     mode: 'payment',
-    success_url: 'https://example.com/success',
-    cancel_url: 'https://example.com/cancel'
+    success_url: functions.config().app.success_url,
+    cancel_url: functions.config().app.cancel_url
   });
 
   return { url: session.url };

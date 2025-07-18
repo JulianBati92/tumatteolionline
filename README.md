@@ -14,12 +14,15 @@ Este proyecto contiene una tienda en línea sencilla hecha con HTML, CSS y JavaS
    ```bash
    firebase functions:config:set stripe.secret="TU_STRIPE_SECRET_KEY"
    ```
-5. Despliega las funciones con:
+5. Configura las URLs de éxito y cancelación para Stripe:
+   ```bash
+   firebase functions:config:set app.success_url="https://tu-sitio.com/exito" \
+     app.cancel_url="https://tu-sitio.com/cancelado"
+   ```
+6. Despliega las funciones con:
    ```bash
    firebase deploy --only functions
    ```
-6. Edita `functions/index.js` y reemplaza las URLs de ejemplo usadas en
-   `success_url` y `cancel_url` con las rutas reales de tu sitio.
 
 ## Configuración del Frontend
 
