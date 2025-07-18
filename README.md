@@ -46,6 +46,7 @@ const firebaseConfig = {
 - `js/firebase-config.js` inicializa Firebase en el frontend.
 - `js/carrito.js` maneja el flujo de compra y la llamada a la función.
 
+
 Con estos pasos tendrás integrada una pasarela de pagos utilizando Firebase Functions y Stripe.
 
 ## Pruebas locales
