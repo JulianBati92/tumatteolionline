@@ -1,3 +1,5 @@
+import { createCheckoutSession } from './firebase-config.js';
+
 let productosEnCarrito = localStorage.getItem("productos-en-carrito");
 productosEnCarrito = JSON.parse(productosEnCarrito);
 
@@ -129,14 +131,35 @@ function actualizarTotal() {
 }
 
 botonComprar.addEventListener("click", comprarCarrito);
-function comprarCarrito() {
+async function comprarCarrito() {
 
+    const items = productosEnCarrito.map(p => ({
+        id: p.id,
+        title: p.titulo,
+        quantity: p.cantidad,
+        price: p.precio
+    }));
+
+    try {
+        const result = await createCheckoutSession({ items });
+        if (result.data && result.data.url) {
+            window.location.href = result.data.url;
+        } else {
+            finalizarCompra();
+        }
+    } catch (error) {
+        console.error('Error al iniciar el checkout', error);
+        finalizarCompra();
+    }
+}
+
+function finalizarCompra() {
     productosEnCarrito.length = 0;
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-    
+
     contenedorCarritoVacio.classList.add("disabled");
     contenedorCarritoProductos.classList.add("disabled");
     contenedorCarritoAcciones.classList.add("disabled");
     contenedorCarritoComprado.classList.remove("disabled");
-
 }
+
