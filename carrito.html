@@ -67,6 +67,25 @@
 
                 <p id="carrito-comprado" class="carrito-comprado disabled">Muchas gracias por tu compra. <i class="bi bi-emoji-laughing"></i></p>
 
+                <div id="carrito-formulario" class="carrito-formulario disabled">
+                    <h3>Datos de la compra</h3>
+                    <form id="form-compra">
+                        <div class="form-control">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" required>
+                        </div>
+                        <div class="form-control">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-control">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" id="direccion" required>
+                        </div>
+                        <button type="submit" class="carrito-acciones-comprar">Finalizar compra</button>
+                    </form>
+                </div>
+
             </div>
         </main>
     </div>
@@ -75,6 +94,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/9.6.11/firebase-functions.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js"></script>
     <script type="module" src="./js/firebase-config.js"></script>
     <script type="module" src="./js/carrito.js"></script>
     <script src="./js/menu.js"></script>
