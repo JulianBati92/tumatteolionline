@@ -200,6 +200,23 @@ main {
     color: var(--clr-main);
 }
 
+.carrito-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.carrito-formulario h3 {
+    margin: 0;
+    color: var(--clr-main);
+}
+
+.carrito-formulario .form-control {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
 .carrito-productos {
     display: flex;
     flex-direction: column;
