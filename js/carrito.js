@@ -1,3 +1,5 @@
+import { createCheckoutSession, saveOrder } from './firebase-config.js';
+
 let productosEnCarrito = localStorage.getItem("productos-en-carrito");
 productosEnCarrito = JSON.parse(productosEnCarrito);
 
@@ -9,6 +11,8 @@ let botonesEliminar = document.querySelectorAll(".carrito-producto-eliminar");
 const botonVaciar = document.querySelector("#carrito-acciones-vaciar");
 const contenedorTotal = document.querySelector("#total");
 const botonComprar = document.querySelector("#carrito-acciones-comprar");
+const contenedorFormulario = document.querySelector("#carrito-formulario");
+const formCompra = document.querySelector("#form-compra");
 
 
 function cargarProductosCarrito() {
@@ -128,15 +132,65 @@ function actualizarTotal() {
     total.innerText = `$${totalCalculado}`;
 }
 
-botonComprar.addEventListener("click", comprarCarrito);
-function comprarCarrito() {
+botonComprar.addEventListener("click", mostrarFormulario);
+formCompra.addEventListener("submit", procesarCompra);
 
+function mostrarFormulario() {
+    contenedorFormulario.classList.remove("disabled");
+}
+
+async function procesarCompra(e) {
+    e.preventDefault();
+    const nombre = document.querySelector('#nombre').value;
+    const email = document.querySelector('#email').value;
+    const direccion = document.querySelector('#direccion').value;
+    const orden = {
+        nombre,
+        email,
+        direccion,
+        items: productosEnCarrito,
+        total: productosEnCarrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0),
+        fecha: new Date().toISOString()
+    };
+    try {
+        await saveOrder(orden);
+    } catch (err) {
+        console.error('Error guardando la orden', err);
+    }
+    contenedorFormulario.classList.add("disabled");
+    formCompra.reset();
+    comprarCarrito();
+}
+
+async function comprarCarrito() {
+
+    const items = productosEnCarrito.map(p => ({
+        id: p.id,
+        title: p.titulo,
+        quantity: p.cantidad,
+        price: p.precio
+    }));
+
+    try {
+        const result = await createCheckoutSession({ items });
+        if (result.data && result.data.url) {
+            window.location.href = result.data.url;
+        } else {
+            finalizarCompra();
+        }
+    } catch (error) {
+        console.error('Error al iniciar el checkout', error);
+        finalizarCompra();
+    }
+}
+
+function finalizarCompra() {
     productosEnCarrito.length = 0;
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-    
+
     contenedorCarritoVacio.classList.add("disabled");
     contenedorCarritoProductos.classList.add("disabled");
     contenedorCarritoAcciones.classList.add("disabled");
     contenedorCarritoComprado.classList.remove("disabled");
-
 }
+

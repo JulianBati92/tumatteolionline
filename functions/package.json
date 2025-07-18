@@ -1,0 +1,12 @@
+{
+  "name": "functions",
+  "description": "Firebase Functions for payment checkout",
+  "engines": {
+    "node": "18"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.10.1",
+    "firebase-functions": "^4.4.1",
+    "stripe": "^18.3.0"
+  }
+}
