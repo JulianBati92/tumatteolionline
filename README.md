@@ -22,7 +22,10 @@ Este proyecto contiene una tienda en línea sencilla hecha con HTML, CSS y JavaS
 6. Despliega las funciones con:
    ```bash
    firebase deploy --only functions
-   ```
+  ```
+7. Habilita **Cloud Firestore** en modo de prueba para almacenar las ordenes.
+   Cuando tu aplicación esté lista para producción, revisa las reglas de
+   seguridad.
 
 ## Configuración del Frontend
 
