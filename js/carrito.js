@@ -1,5 +1,6 @@
 import { createCheckoutSession, saveOrder } from './firebase-config.js';
 
+
 let productosEnCarrito = localStorage.getItem("productos-en-carrito");
 productosEnCarrito = JSON.parse(productosEnCarrito);
 
@@ -132,6 +133,7 @@ function actualizarTotal() {
     total.innerText = `$${totalCalculado}`;
 }
 
+
 botonComprar.addEventListener("click", mostrarFormulario);
 formCompra.addEventListener("submit", procesarCompra);
 
@@ -183,6 +185,7 @@ async function comprarCarrito() {
         finalizarCompra();
     }
 }
+
 
 function finalizarCompra() {
     productosEnCarrito.length = 0;
