@@ -18,7 +18,7 @@ Desde `functions/` ejecutá:
 ```bash
 npm ci
 npm run check
-npm audit --omit=dev
+npm run audit
 ```
 
 Los cambios deben conservar el flujo de carrito y evitar que precios o totales proporcionados por el navegador sean considerados confiables.
