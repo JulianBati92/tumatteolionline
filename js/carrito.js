@@ -1,4 +1,4 @@
-import { createCheckoutSession, saveOrder } from './firebase-config.js';
+import { createCheckoutSession } from './firebase-config.js';
 
 
 let productosEnCarrito = localStorage.getItem("productos-en-carrito");
@@ -143,38 +143,20 @@ function mostrarFormulario() {
 
 async function procesarCompra(e) {
     e.preventDefault();
-    const nombre = document.querySelector('#nombre').value;
     const email = document.querySelector('#email').value;
-    const direccion = document.querySelector('#direccion').value;
-    const orden = {
-        nombre,
-        email,
-        direccion,
-        items: productosEnCarrito,
-        total: productosEnCarrito.reduce((acc, p) => acc + (p.precio * p.cantidad), 0),
-        fecha: new Date().toISOString()
-    };
-    try {
-        await saveOrder(orden);
-    } catch (err) {
-        console.error('Error guardando la orden', err);
-    }
     contenedorFormulario.classList.add("disabled");
-    formCompra.reset();
-    comprarCarrito();
+    await comprarCarrito(email);
 }
 
-async function comprarCarrito() {
+async function comprarCarrito(email) {
 
     const items = productosEnCarrito.map(p => ({
         id: p.id,
-        title: p.titulo,
-        quantity: p.cantidad,
-        price: p.precio
+        quantity: p.cantidad
     }));
 
     try {
-        const result = await createCheckoutSession({ items });
+        const result = await createCheckoutSession({ items, email });
         if (result.data && result.data.url) {
             window.location.href = result.data.url;
         } else {
@@ -182,7 +164,8 @@ async function comprarCarrito() {
         }
     } catch (error) {
         console.error('Error al iniciar el checkout', error);
-        finalizarCompra();
+        contenedorFormulario.classList.remove("disabled");
+        Swal.fire('No pudimos iniciar el pago', 'Revisá los datos e intentá nuevamente.', 'error');
     }
 }
 
@@ -196,4 +179,3 @@ function finalizarCompra() {
     contenedorCarritoAcciones.classList.add("disabled");
     contenedorCarritoComprado.classList.remove("disabled");
 }
-
