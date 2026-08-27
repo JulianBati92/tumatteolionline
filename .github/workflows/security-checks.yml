@@ -29,4 +29,4 @@ jobs:
       - name: Comprobar sintaxis
         run: npm run check
       - name: Revisar dependencias de producción
-        run: npm audit --omit=dev
+        run: npm run audit
