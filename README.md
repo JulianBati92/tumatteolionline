@@ -1,60 +1,90 @@
 # Tu Matteoli Online
 
-Este proyecto contiene una tienda en línea sencilla hecha con HTML, CSS y JavaScript. A continuación se explica cómo integrar una pasarela de pagos utilizando Firebase y Stripe.
+Tienda web para mostrar un catálogo de mates y accesorios, administrar un carrito e iniciar pagos mediante Stripe. El frontend está hecho con HTML, CSS y JavaScript sin frameworks; el checkout se crea desde Firebase Functions para que los precios no dependan de los datos enviados por el navegador.
 
-## Configuración de Firebase
+## Funcionalidades
 
-1. Crea un proyecto en [Firebase](https://firebase.google.com/) y habilita **Cloud Functions**.
-2. Instala la [Firebase CLI](https://firebase.google.com/docs/cli) y ejecuta `firebase login` para autenticarte.
-3. Dentro del directorio `functions` instala las dependencias con:
-   ```bash
-   npm install
-   ```
-4. Configura la clave secreta de Stripe:
-   ```bash
-   firebase functions:config:set stripe.secret="TU_STRIPE_SECRET_KEY"
-   ```
-5. Despliega las funciones con:
-   ```bash
-   firebase deploy --only functions
-   ```
-6. Edita `functions/index.js` y reemplaza las URLs de ejemplo usadas en
-   `success_url` y `cancel_url` con las rutas reales de tu sitio.
+- catálogo con filtros por categoría;
+- carrito persistido en el navegador;
+- formulario con datos de contacto;
+- checkout alojado por Stripe;
+- validación de productos y cantidades en el servidor;
+- integración con Firebase Functions.
 
-## Configuración del Frontend
+## Tecnologías
 
-1. El archivo `js/firebase-config.js` ya contiene un ejemplo de configuración con el proyecto **tumatteolionline**. Si utilizas otro proyecto de Firebase, actualiza los valores por los tuyos.
-2. Al presionar **Comprar ahora** en `carrito.html`, se llamará a la función `createCheckoutSession` que crea una sesión de pago en Stripe y redirige al usuario a la pasarela.
+- HTML, CSS y JavaScript;
+- Firebase Functions;
+- Firebase Admin SDK;
+- Stripe Checkout;
+- GitHub Actions y Dependabot.
 
-### Ejemplo de `firebase-config.js`
+## Estructura
 
-```javascript
-const firebaseConfig = {
-  apiKey: "AIzaSyDf9kPs2so_VFyMelCKXvFhEs3A4-xMbvQ",
-  authDomain: "tumatteolionline.firebaseapp.com",
-  projectId: "tumatteolionline",
-  storageBucket: "tumatteolionline.appspot.com",
-  messagingSenderId: "621581841999",
-  appId: "1:621581841999:web:a0840941af57f63ee89c3a",
-  measurementId: "G-WDG0ZRM9HF"
-};
+```text
+.
+├── css/                 Estilos del sitio
+├── img/                 Imágenes del catálogo
+├── js/                  Catálogo, carrito e integración con Firebase
+├── functions/           Funciones backend y creación del checkout
+├── index.html           Catálogo
+└── carrito.html         Carrito y datos de compra
 ```
 
-## Estructura del Proyecto
+## Puesta en marcha
 
-- `functions/` contiene el código de las Cloud Functions de Firebase.
-- `js/firebase-config.js` inicializa Firebase en el frontend.
-- `js/carrito.js` maneja el flujo de compra y la llamada a la función.
+### 1. Preparar Firebase
 
+Creá un proyecto en Firebase, instalá la CLI e iniciá sesión:
 
-Con estos pasos tendrás integrada una pasarela de pagos utilizando Firebase Functions y Stripe.
+```bash
+npm install -g firebase-tools
+firebase login
+```
 
-## Pruebas locales
+Actualizá la configuración pública del proyecto en `js/firebase-config.js`. Esos identificadores permiten conectar el frontend con Firebase, pero no reemplazan las reglas de seguridad ni deben utilizarse como credenciales privadas.
 
-Para probar la pasarela sin desplegarla puedes utilizar los emuladores de Firebase:
+### 2. Instalar las funciones
+
+```bash
+cd functions
+npm ci
+```
+
+Configurá la clave secreta de Stripe sin guardarla en el repositorio:
+
+```bash
+firebase functions:secrets:set STRIPE_SECRET_KEY
+```
+
+Definí `CHECKOUT_SUCCESS_URL` y `CHECKOUT_CANCEL_URL` cuando la CLI las solicite durante el despliegue. Los valores predeterminados son únicamente de ejemplo.
+
+### 3. Probar localmente
 
 ```bash
 firebase emulators:start --only functions
 ```
 
-Luego abre `carrito.html` en tu navegador. La función `createCheckoutSession` se ejecutará de forma local.
+Serví los archivos del frontend con un servidor HTTP local. No abras los HTML directamente desde `file://`, porque los módulos y las solicitudes pueden ser bloqueados por el navegador.
+
+## Modelo de seguridad
+
+El navegador solo envía identificadores y cantidades. La función valida cada producto y obtiene su precio desde un catálogo controlado por el servidor antes de crear la sesión de Stripe. Los datos recibidos también tienen límites de formato y longitud.
+
+Para una implementación comercial completa todavía se recomienda:
+
+- confirmar el pago mediante webhooks de Stripe;
+- guardar el pedido únicamente después de verificar el evento;
+- habilitar Firebase App Check;
+- definir políticas de privacidad y conservación de datos;
+- ajustar moneda, impuestos, envíos y URL según el comercio.
+
+Los problemas de seguridad deben reportarse siguiendo [SECURITY.md](SECURITY.md), sin publicar datos sensibles en issues.
+
+## Contribuciones
+
+Las propuestas y correcciones son bienvenidas. Consultá [CONTRIBUTING.md](CONTRIBUTING.md) antes de abrir un pull request.
+
+## Licencia
+
+Distribuido bajo la licencia MIT. Consultá [LICENSE](LICENSE).
