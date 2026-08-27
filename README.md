@@ -57,7 +57,13 @@ Configurá la clave secreta de Stripe sin guardarla en el repositorio:
 firebase functions:secrets:set STRIPE_SECRET_KEY
 ```
 
-Definí `CHECKOUT_SUCCESS_URL` y `CHECKOUT_CANCEL_URL` cuando la CLI las solicite durante el despliegue. Los valores predeterminados son únicamente de ejemplo.
+El proyecto incluye valores predeterminados para `CHECKOUT_SUCCESS_URL` y `CHECKOUT_CANCEL_URL` con el dominio publicado. Podés reemplazarlos durante el despliegue si utilizás otro dominio.
+
+Desplegá la función de checkout con:
+
+```bash
+firebase deploy --only functions:createCheckoutSession
+```
 
 ### 3. Probar localmente
 
