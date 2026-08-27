@@ -4,10 +4,10 @@ const Stripe = require('stripe');
 
 const stripeSecret = defineSecret('STRIPE_SECRET_KEY');
 const checkoutSuccessUrl = defineString('CHECKOUT_SUCCESS_URL', {
-  default: 'https://example.com/success'
+  default: 'https://tumatteolionline.vercel.app/?pago=exitoso'
 });
 const checkoutCancelUrl = defineString('CHECKOUT_CANCEL_URL', {
-  default: 'https://example.com/cancel'
+  default: 'https://tumatteolionline.vercel.app/carrito.html?pago=cancelado'
 });
 
 // El precio siempre se resuelve en el servidor. El cliente solo envía el ID
@@ -39,7 +39,7 @@ function buildLineItems(items) {
 
     return {
       price_data: {
-        currency: 'usd',
+        currency: 'ars',
         product_data: { name: product.name },
         unit_amount: Math.round(product.price * 100)
       },
