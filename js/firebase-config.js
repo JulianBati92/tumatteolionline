@@ -2,7 +2,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
 import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-functions.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore.js";
 
 
 // Your web app's Firebase configuration
@@ -20,13 +19,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
-const db = getFirestore(app);
-
-export async function saveOrder(data) {
-  const ordersCol = collection(db, 'orders');
-  await addDoc(ordersCol, data);
-}
 
 export const functions = getFunctions(app);
 export const createCheckoutSession = httpsCallable(functions, 'createCheckoutSession');
