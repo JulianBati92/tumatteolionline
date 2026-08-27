@@ -1,0 +1,32 @@
+name: Comprobaciones de seguridad
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  functions:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: functions
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+      - name: Instalar dependencias
+        run: npm ci
+      - name: Comprobar sintaxis
+        run: npm run check
+      - name: Revisar dependencias de producción
+        run: npm audit --omit=dev
